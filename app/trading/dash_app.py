@@ -7,6 +7,7 @@ import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import pandas as pd
 import numpy as np
+from numpy import nan as npNaN
 import datetime
 from flask_login import current_user
 from app.helpers.data_fetcher import fetch_stock_data
@@ -230,7 +231,7 @@ def create_dash_app(flask_app):
                             dbc.Label("Select Data Interval"),
                             dcc.Dropdown(
                                 id="crypto-interval",
-                                options=[{"label": i, "value": i} for p in ["1m", "5m", "15m", "30m", "1h", "1d"]],
+                                options=[{"label": id, "value": id} for p in ["1m", "5m", "15m", "30m", "1h", "1d"]],
                                 value="1d",
                                 className="mb-2"
                             )

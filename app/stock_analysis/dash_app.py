@@ -284,8 +284,8 @@ def create_dash_app(flask_app):
             
             # Add the ticker to the watchlist
             item = WatchlistItem(watchlist_id=watchlist_id, ticker=ticker)
-            db.session.add(item)
-            db.session.commit()
+            dbc.session.add(item)
+            dbc.session.commit()
             
             return html.P(f"Added {ticker} to watchlist successfully!", className="text-success")
         except Exception as e:
