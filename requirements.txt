@@ -1,0 +1,34 @@
+# Flask and extensions
+Flask==2.3.2
+Flask-SQLAlchemy==3.0.5
+Flask-Login==0.6.2
+Flask-Migrate==4.0.4
+Flask-WTF==1.1.1
+Flask-Mail==0.9.1
+email-validator==2.0.0
+python-dotenv==1.0.0
+itsdangerous==2.1.2
+Werkzeug==2.3.6
+Jinja2==3.1.2
+
+# Database
+SQLAlchemy==2.0.18
+psycopg2-binary==2.9.6
+alembic==1.11.1
+
+# Dash and visualization
+dash==2.11.1
+dash-bootstrap-components==1.4.1
+plotly==5.15.0
+pandas==2.0.3
+numpy==1.25.1
+matplotlib==3.7.2
+
+# Data fetching and analysis
+yfinance==0.2.25
+pandas-ta==0.3.14b0
+scipy==1.11.1
+
+# Production
+gunicorn==20.1.0
+supervisor==4.2.5

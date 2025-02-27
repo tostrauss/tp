@@ -1,0 +1,120 @@
+{# app/templates/dashboard/index.html #}
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - ToFu's Trading Platform{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="card-title">Welcome back, {{ current_user.username }}!</h2>
+                    <p class="card-text text-muted">Here's your financial dashboard overview.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Market Overview Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3 mb-md-0">
+            <div class="card shadow h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted">S&P 500</h6>
+                            <h4 id="sp500-price">--.--</h4>
+                        </div>
+                        <div id="sp500-change" class="badge bg-success">+-.--% <i class="fas fa-caret-up"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3 mb-md-0">
+            <div class="card shadow h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted">Nasdaq</h6>
+                            <h4 id="nasdaq-price">--.--</h4>
+                        </div>
+                        <div id="nasdaq-change" class="badge bg-danger">--.--% <i class="fas fa-caret-down"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3 mb-md-0">
+            <div class="card shadow h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted">Bitcoin</h6>
+                            <h4 id="btc-price">--.--</h4>
+                        </div>
+                        <div id="btc-change" class="badge bg-success">+-.--% <i class="fas fa-caret-up"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted">VIX</h6>
+                            <h4 id="vix-price">--.--</h4>
+                        </div>
+                        <div id="vix-change" class="badge bg-danger">--.--% <i class="fas fa-caret-down"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <!-- Watchlists Card -->
+        <div class="col-md-6 mb-4 mb-md-0">
+            <div class="card shadow h-100">
+                <div class="card-header bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="fas fa-star me-2"></i>Your Watchlists</h5>
+                        <a href="{{ url_for('stock_analysis.index') }}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-plus me-1"></i> Add Stocks
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if watchlists %}
+                        <ul class="nav nav-pills mb-3" id="watchlist-tabs" role="tablist">
+                            {% for watchlist in watchlists %}
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link {% if loop.first %}active{% endif %}" 
+                                            id="tab-{{ watchlist.id }}" 
+                                            data-bs-toggle="pill" 
+                                            data-bs-target="#watchlist-{{ watchlist.id }}" 
+                                            type="button" 
+                                            role="tab" 
+                                            aria-controls="watchlist-{{ watchlist.id }}" 
+                                            aria-selected="{% if loop.first %}true{% else %}false{% endif %}">
+                                        {{ watchlist.name }}
+                                    </button>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <div class="tab-content" id="watchlist-content">
+                            {% for watchlist in watchlists %}
+                                <div class="tab-pane fade {% if loop.first %}show active{% endif %}" 
+                                     id="watchlist-{{ watchlist.id }}" 
+                                     role="tabpanel" 
+                                     aria-labelledby="tab-{{ watchlist.id }}">
+                                    
+                                    {% if watchlist.stocks.count() > 0 %}
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Symbol</th>
+                                                        <th>Last Price</th>
+                                                        <th>Change</th>
+                                                        <th>RSI</th>
